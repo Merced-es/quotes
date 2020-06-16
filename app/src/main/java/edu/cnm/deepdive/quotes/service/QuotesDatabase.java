@@ -1,13 +1,16 @@
 package edu.cnm.deepdive.quotes.service;
 
 import android.app.Application;
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import edu.cnm.deepdive.quotes.model.dao.QuoteDao;
 import edu.cnm.deepdive.quotes.model.dao.SourceDao;
 import edu.cnm.deepdive.quotes.model.entity.Quote;
 import edu.cnm.deepdive.quotes.model.entity.Source;
+import io.reactivex.schedulers.Schedulers;
 
 @Database(
     entities = {Source.class, Quote.class},
@@ -30,14 +33,36 @@ public abstract class QuotesDatabase extends RoomDatabase {
 
   public static QuotesDatabase getInstance() {
     return InstanceHolder.INSTANCE;
-
   }
 
   private static class InstanceHolder {
 
     private static final QuotesDatabase INSTANCE =
-        Room.databaseBuilder(context, QuotesDatabase.class,DB_NAME)
-        // Set other options for builder to use when creating QuotesDatabase instance.
-    .build();
+        Room.databaseBuilder(context, QuotesDatabase.class, DB_NAME)
+            .addCallback(new Callback() {
+              @Override
+              public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                super.onCreate(db);
+                QuotesDatabase database = QuotesDatabase.getInstance();
+                SourceDao sourceDao = database.getSourceDao();
+                Source source = new Source();
+                source.setName("Albert Einstein");
+                sourceDao.insert(source)
+                    .subscribeOn(Schedulers.io())
+                    .map((sourceId) -> {
+                      Quote quote = new Quote();
+                      quote.setSourceId(sourceId);
+                      quote.setText(
+                          "Few are those who see with their own eyes and feel with their own hearts.");
+                      QuoteDao quoteDao = database.getQuoteDao();
+                      quoteDao.insert(quote)
+                          .subscribeOn(Schedulers.io())
+                          .subscribe();
+                      return sourceId;
+                    })
+                    .subscribe();
+              }
+            })
+            .build();
   }
 }
