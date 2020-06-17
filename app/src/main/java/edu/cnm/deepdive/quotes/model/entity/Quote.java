@@ -51,4 +51,10 @@ private Long sourceId;
   public void setText(@NonNull String text) {
     this.text = text;
   }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return text;
+  }
 }
