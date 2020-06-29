@@ -26,7 +26,11 @@ public class QuotesRepository {
 public Single<List<QuoteWithSource>> getQuotes() {
     return quoteDao.selectAll()
         .subscribeOn(Schedulers.io());
+}
 
+public Single<QuoteWithSource> getQuote(long id) {
+    return quoteDao.selectById(id)
+        .subscribeOn(Schedulers.io());
 }
 
 }

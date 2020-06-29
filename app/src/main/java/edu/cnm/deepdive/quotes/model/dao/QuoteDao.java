@@ -35,5 +35,8 @@ import java.util.List;
     @Query("SELECT * FROM Quote WHERE source_id = :sourceId")
     Single<List<Quote>> selectBySourceId(long sourceId);
 
+    @Transaction
+    @Query("SELECT * FROM Quote WHERE quote_id = :quoteId")
+    Single<QuoteWithSource> selectById(long quoteId);
   }
 

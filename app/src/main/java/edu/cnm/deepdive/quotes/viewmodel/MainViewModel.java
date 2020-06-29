@@ -21,11 +21,13 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   private final MutableLiveData<List<QuoteWithSource>> quotes;
   private final MutableLiveData<Throwable> throwable;
   private final CompositeDisposable pending;
+  private final MutableLiveData<QuoteWithSource> quote;
 
   public MainViewModel(@NonNull Application application) {
     super(application);
     repository = new QuotesRepository(application);
     quotes = new MutableLiveData<>();
+    quote = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
     pending = new CompositeDisposable();
     loadQuotes();
@@ -35,23 +37,36 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
     return quotes;
   }
 
+  public LiveData<QuoteWithSource> getQuote() {
+    return quote;
+  }
+
   public LiveData<Throwable> getThrowable() {
     return throwable;
   }
 
+  public void setQuoteId(long id) {
+    pending.add(
+        repository.getQuote(id)
+            .subscribe(
+                (quote) -> this.quote.postValue(quote),
+                (throwable) -> this.throwable.postValue(throwable)
+            )
+    );
+  }
+
   private void loadQuotes() {
     pending.add(
-    repository.getQuotes()
-        .subscribe(
-            (quotes) -> this.quotes.postValue(quotes),
-            (throwable) -> this.throwable.postValue(throwable)
-        )
+        repository.getQuotes()
+            .subscribe(
+                (quotes) -> this.quotes.postValue(quotes),
+                (throwable) -> this.throwable.postValue(throwable)
+            )
     );
   }
 
   @OnLifecycleEvent(Event.ON_STOP)
   private void clearPending() {
-
     pending.clear();
   }
 
