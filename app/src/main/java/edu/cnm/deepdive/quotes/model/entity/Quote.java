@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey;
 
 @Entity(
     foreignKeys = @ForeignKey(
-        entity = Source.class,
-        parentColumns = "source_id",
-        childColumns = "source_id",
-        onDelete = ForeignKey.SET_NULL
-    )
+            entity = Source.class,
+            parentColumns = "source_id",
+            childColumns = "source_id",
+            onDelete = ForeignKey.SET_NULL
+        )
 )
 public class Quote {
 
