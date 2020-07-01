@@ -12,14 +12,14 @@ import edu.cnm.deepdive.quotes.model.entity.Quote;
 import edu.cnm.deepdive.quotes.model.entity.Source;
 import edu.cnm.deepdive.quotes.model.pojo.QuoteWithSource;
 import edu.cnm.deepdive.quotes.service.QuoteRepository;
-import edu.cnm.deepdive.quotes.service.ServiceRepository;
+import edu.cnm.deepdive.quotes.service.SourceRepository;
 import io.reactivex.disposables.CompositeDisposable;
 import java.util.List;
 
 public class MainViewModel extends AndroidViewModel implements LifecycleObserver {
 
   private final QuoteRepository quoteRepository;
-  private final ServiceRepository serviceRepository;
+  private final SourceRepository sourceRepository;
   private final MutableLiveData<Throwable> throwable;
   private final CompositeDisposable pending;
   private final MutableLiveData<QuoteWithSource> quote;
@@ -27,7 +27,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   public MainViewModel(@NonNull Application application) {
     super(application);
     quoteRepository = new QuoteRepository(application);
-    serviceRepository = new ServiceRepository(application);
+    sourceRepository = new SourceRepository(application);
     quote = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
     pending = new CompositeDisposable();
@@ -38,7 +38,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
     public LiveData<List<Source>> getSources () {
-      return serviceRepository.getAll();
+      return sourceRepository.getAll();
     }
 
 
