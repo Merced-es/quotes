@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:layout_margin="@dimen/half_margin"
-        android:hint="Source of quote"/>
+        android:source_hint="name of source"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,7 +50,7 @@
         android:minLines="3"
         android:maxLines="6"
         android:layout_margin="@dimen/half_margin"
-        android:hint="Text of quote"/>
+        android:quote_hint="Text of quote"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
