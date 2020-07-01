@@ -6,18 +6,22 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import edu.cnm.deepdive.quotes.R;
 import edu.cnm.deepdive.quotes.model.dao.QuoteDao;
 import edu.cnm.deepdive.quotes.model.dao.SourceDao;
 import edu.cnm.deepdive.quotes.model.entity.Quote;
 import edu.cnm.deepdive.quotes.model.entity.Source;
+import edu.cnm.deepdive.quotes.service.QuotesDatabase.Converters;
 import io.reactivex.schedulers.Schedulers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -32,6 +36,7 @@ import org.apache.commons.csv.CSVRecord;
     version = 1,
     exportSchema = true
 )
+@TypeConverters({Converters.class})
 public abstract class QuotesDatabase extends RoomDatabase {
 
   private static final String DB_NAME = "quotes_db";
@@ -128,4 +133,17 @@ public abstract class QuotesDatabase extends RoomDatabase {
 
   }
 
+  public static class Converters {
+
+    @TypeConverter
+    public static Long dateToLong(Date value) {
+      return (value != null) ? value.getTime() : null;
+    }
+
+    @TypeConverter
+    public static Date longToDate(Long value) {
+      return (value!= null) ? new Date(value) : null;
+    }
+
+  }
 }
