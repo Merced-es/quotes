@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import edu.cnm.deepdive.quotes.R;
-import edu.cnm.deepdive.quotes.ui.notifications.NotificationsViewModel;
 
 public class SourcesFragment extends Fragment {
 

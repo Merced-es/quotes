@@ -16,7 +16,7 @@ public class SourceAdapter extends RecyclerView.Adapter<Holder> {
   private final OnClickListener clickListener;
 
   public SourceAdapter(
-      Context context, List<SourceWithQuotes> quotes, OnClickListener clickListener) {
+      Context context, List<SourceWithQuotes> sources, OnClickListener clickListener) {
     super();
     this.context = context;
     this.sources = sources;
@@ -26,10 +26,10 @@ public class SourceAdapter extends RecyclerView.Adapter<Holder> {
   @NonNull
   @Override
   public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    View view = null
-    return new Holder(view);
+    View view = null;
     // TODO Inflate correct layout.
-    }
+    return new Holder(view);
+  }
 
   @Override
   public void onBindViewHolder(@NonNull Holder holder, int position) {
@@ -45,6 +45,7 @@ public class SourceAdapter extends RecyclerView.Adapter<Holder> {
 
     private final View itemView;
     // TODO Define new fields for source data.
+
     public Holder(@NonNull View itemView) {
       super(itemView);
       this.itemView = itemView;
@@ -54,7 +55,7 @@ public class SourceAdapter extends RecyclerView.Adapter<Holder> {
     private void bind(int position) {
       SourceWithQuotes item = sources.get(position);
       // TODO Set contents of view objects to hold contents of model objects.
-      itemView.setOnClickListener((v) -> clickListener.onClick(v, getAdapterPosition(),item));
+      itemView.setOnClickListener((v) -> clickListener.onClick(v, getAdapterPosition(), item));
     }
 
   }
@@ -64,4 +65,5 @@ public class SourceAdapter extends RecyclerView.Adapter<Holder> {
     void onClick(View v, int position, SourceWithQuotes source);
 
   }
+
 }
