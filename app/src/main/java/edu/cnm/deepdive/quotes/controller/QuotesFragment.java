@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import edu.cnm.deepdive.quotes.R;
 import edu.cnm.deepdive.quotes.model.pojo.QuoteWithSource;
+import edu.cnm.deepdive.quotes.view.QuoteAdapter;
 import edu.cnm.deepdive.quotes.view.SourceAdapter;
 import edu.cnm.deepdive.quotes.viewmodel.MainViewModel;
 
-public class QuotesFragment extends Fragment implements SourceAdapter.OnClickListener {
+public class QuotesFragment extends Fragment implements QuoteAdapter.OnClickListener {
 
   private MainViewModel mainViewModel;
   private RecyclerView quoteList;
@@ -27,7 +28,7 @@ public class QuotesFragment extends Fragment implements SourceAdapter.OnClickLis
     //noinspection ConstantConditions
     mainViewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     mainViewModel.getQuotes().observe(getViewLifecycleOwner(), (quotes) -> {
-      quoteList.setAdapter(new SourceAdapter(getContext(), quotes, this));
+      quoteList.setAdapter(new QuoteAdapter(getContext(), quotes, this));
     });
   }
 
