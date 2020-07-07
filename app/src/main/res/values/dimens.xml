@@ -5,4 +5,5 @@
   <dimen name="half_margin">4dp</dimen>
   <dimen name="quote_item_radius">4dp</dimen>
   <dimen name="quote_item_resource">4dp</dimen>
+  <dimen name="login_button_padding">8dp</dimen>
 </resources>
