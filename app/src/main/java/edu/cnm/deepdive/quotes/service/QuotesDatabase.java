@@ -8,6 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import edu.cnm.deepdive.quotes.R;
 import edu.cnm.deepdive.quotes.model.dao.QuoteDao;
@@ -33,7 +34,7 @@ import org.apache.commons.csv.CSVRecord;
 
 @Database(
     entities = {Source.class, Quote.class},
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters({Converters.class})
@@ -59,8 +60,22 @@ public abstract class QuotesDatabase extends RoomDatabase {
 
     private static final QuotesDatabase INSTANCE =
         Room.databaseBuilder(context, QuotesDatabase.class, DB_NAME)
+            .addMigrations(new Migration12())
             .addCallback(new QuotesCallback())
             .build();
+
+  }
+
+  private static class Migration12 extends Migration {
+
+    public Migration12() {
+      super(1,2);
+    }
+
+    @Override
+    public void migrate(@NonNull SupportSQLiteDatabase database) {
+      database.execSQL("ALTER TABLE Quote ADD COLUMN created INTEGER");
+    }
 
   }
 

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2bd2bfadcb1f7123ac291f1fc3ef93db",
+    "identityHash": "3113b8992a80afd82cb0b18670c61405",
     "entities": [
       {
         "tableName": "Source",
@@ -41,13 +41,19 @@
       },
       {
         "tableName": "Quote",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quote_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `source_id` INTEGER, `text` TEXT NOT NULL COLLATE NOCASE, FOREIGN KEY(`source_id`) REFERENCES `Source`(`source_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quote_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `created` INTEGER, `source_id` INTEGER, `text` TEXT NOT NULL COLLATE NOCASE, FOREIGN KEY(`source_id`) REFERENCES `Source`(`source_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "quote_id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "sourceId",
@@ -96,7 +102,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2bd2bfadcb1f7123ac291f1fc3ef93db')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3113b8992a80afd82cb0b18670c61405')"
     ]
   }
 }

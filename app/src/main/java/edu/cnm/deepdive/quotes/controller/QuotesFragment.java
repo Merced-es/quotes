@@ -13,7 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import edu.cnm.deepdive.quotes.R;
 import edu.cnm.deepdive.quotes.model.pojo.QuoteWithSource;
 import edu.cnm.deepdive.quotes.view.QuoteAdapter;
-import edu.cnm.deepdive.quotes.view.SourceAdapter;
 import edu.cnm.deepdive.quotes.viewmodel.MainViewModel;
 
 public class QuotesFragment extends Fragment implements QuoteAdapter.OnClickListener {
